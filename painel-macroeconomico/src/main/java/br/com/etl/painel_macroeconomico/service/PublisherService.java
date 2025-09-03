@@ -31,13 +31,10 @@ public class PublisherService {
     // 2. RECEBA O ObjectMapper GERENCIADO PELO SPRING VIA CONSTRUTOR
     public PublisherService(RabbitTemplate rabbitTemplate, ObjectMapper mapper) {
         this.rabbitTemplate = rabbitTemplate;
-        this.mapper = mapper; // O Spring injetará a instância configurada corretamente
+        this.mapper = mapper; 
     }
 
-    /**
-     * Busca os dados de uma série econômica do Banco Central para os últimos 10 anos e os publica na fila.
-     * Este é o método que o seu AgendadorCapturaService deve chamar.
-     */
+   
     public void publicarUltimosDezAnos(String nome, Integer codigoBc, String frequencia) {
         LocalDate dataFinal = LocalDate.now();
         LocalDate dataInicial = dataFinal.minusYears(MAX_YEARS_INTERVAL);
@@ -46,8 +43,8 @@ public class PublisherService {
     }
 
     /**
-     * Busca os dados de uma série econômica do BCB para um período específico e publica cada entrada na fila.
-     * O período é limitado a no máximo 10 anos.
+     * Busca os dados de indicadores econômicos do BCB para um período específico e publica cada entrada na fila.
+     * O período é limitado a no máximo 10 anos que é o maximo que o BCB aceita .
      */
     public void publicarIndicador(String nome, Integer codigoBc, String frequencia, LocalDate dataInicial, LocalDate dataFinal) {
         try {
@@ -96,7 +93,7 @@ public class PublisherService {
                                 frequencia
                         );
 
-                        // A mágica acontece aqui: o 'mapper' injetado sabe como lidar com LocalDate
+                        
                         String mensagemJson = mapper.writeValueAsString(dto);
                         rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, mensagemJson);
                     } else {

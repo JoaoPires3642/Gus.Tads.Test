@@ -7,7 +7,7 @@ package br.com.etl.painel_macroeconomico.model;
  */
 public enum Indicador {
 
-    // Códigos atualizados conforme sua pesquisa.
+    
     DOLAR("Dólar Americano - Venda (PTAX)", 10813, "Diária"),
     EURO("Cotação do Euro", 21619, "Diária"),
     SELIC("Taxa Selic ", 11, "Diária"),

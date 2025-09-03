@@ -17,10 +17,11 @@ public class AgendadorCapturaService {
     }
 
     /**
-     * Método agendado para rodar todo dia às 14h (2 PM) no fuso horário de São Paulo.
+     * Método agendado para rodar todo dia às 14h no fuso horário de São Paulo.
+     * cron primeiro numeros 0 é o segundos o segundo numero minutos e o terceiro Horas
      * Ele busca todos os indicadores definidos no Enum Indicador.
      */
-    @Scheduled(cron = "0 37 14 * * ?", zone = "America/Sao_Paulo")
+    @Scheduled(cron = "0 37 14 * * ?", zone = "America/Sao_Paulo")  
     public void capturarIndicadoresAgendados() {
         System.out.println("==========================================================");
         System.out.println("INICIANDO CAPTURA AGENDADA DE INDICADORES...");
@@ -38,14 +39,14 @@ public class AgendadorCapturaService {
             LocalDate dataInicial = null;
             LocalDate dataFinal = null;
 
-            // Lógica para indicadores de frequência DIÁRIA
+           
             if ("Diária".equalsIgnoreCase(indicador.getFrequencia())) {
                 deveBuscar = true;
-                // Busca os dados do dia anterior até hoje, para garantir que pegamos o último valor publicado.
+                // Busca os dados do dia anterior e hoje, para garantir o último valor publicado.
                 dataInicial = hoje.minusDays(1);
                 dataFinal = hoje;
             
-            // Lógica para indicadores de frequência MENSAL
+            
             } else if ("Mensal".equalsIgnoreCase(indicador.getFrequencia())) {
                 // Roda a busca por dados mensais apenas no segundo dia do mês.
                 if (hoje.getDayOfMonth() == 2) {
@@ -60,7 +61,7 @@ public class AgendadorCapturaService {
             
             if (deveBuscar) {
                 System.out.println("   Disparando captura para o período de " + dataInicial + " a " + dataFinal);
-                // Usa o método que aceita datas para buscar um período específico
+               
                 publisherService.publicarIndicador(
                         indicador.getNomeAmigavel(),
                         indicador.getCodigoSgs(),

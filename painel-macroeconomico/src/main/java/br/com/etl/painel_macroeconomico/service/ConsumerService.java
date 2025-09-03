@@ -19,8 +19,7 @@ public class ConsumerService {
     // 2. RECEBA O ObjectMapper GERENCIADO PELO SPRING VIA CONSTRUTOR
     public ConsumerService(IndicadorEconomicoRepository repository, ObjectMapper mapper) {
         this.repository = repository;
-        this.mapper = mapper; // O Spring injetará a instância correta
-        // REMOVA A CRIAÇÃO E CONFIGURAÇÃO MANUAL DAQUI
+        this.mapper = mapper;
     }
 
     @RabbitListener(queues = "painelQueue") // Escuta a fila
