@@ -1,0 +1,81 @@
+package br.com.etl.painel_macroeconomico.service;
+
+import br.com.etl.painel_macroeconomico.model.Indicador;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+
+@Service
+public class AgendadorCapturaService {
+
+    private final PublisherService publisherService;
+
+    // Injetamos o PublisherService que você já criou
+    public AgendadorCapturaService(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
+
+    /**
+     * Método agendado para rodar todo dia às 14h (2 PM) no fuso horário de São Paulo.
+     * Ele busca todos os indicadores definidos no Enum Indicador.
+     */
+    @Scheduled(cron = "0 37 14 * * ?", zone = "America/Sao_Paulo")
+    public void capturarIndicadoresAgendados() {
+        System.out.println("==========================================================");
+        System.out.println("INICIANDO CAPTURA AGENDADA DE INDICADORES...");
+        System.out.println("Horário: " + java.time.LocalDateTime.now());
+        System.out.println("==========================================================");
+
+        LocalDate hoje = LocalDate.now();
+
+        // Itera sobre todos os valores do Enum para verificar a frequência
+        for (Indicador indicador : Indicador.values()) {
+            
+            System.out.println("-> Verificando indicador: " + indicador.getNomeAmigavel());
+
+            boolean deveBuscar = false;
+            LocalDate dataInicial = null;
+            LocalDate dataFinal = null;
+
+            // Lógica para indicadores de frequência DIÁRIA
+            if ("Diária".equalsIgnoreCase(indicador.getFrequencia())) {
+                deveBuscar = true;
+                // Busca os dados do dia anterior até hoje, para garantir que pegamos o último valor publicado.
+                dataInicial = hoje.minusDays(1);
+                dataFinal = hoje;
+            
+            // Lógica para indicadores de frequência MENSAL
+            } else if ("Mensal".equalsIgnoreCase(indicador.getFrequencia())) {
+                // Roda a busca por dados mensais apenas no segundo dia do mês.
+                if (hoje.getDayOfMonth() == 2) {
+                    deveBuscar = true;
+                    // Busca os dados referentes ao mês anterior completo.
+                    LocalDate primeiroDiaMesAnterior = hoje.minusMonths(1).withDayOfMonth(1);
+                    LocalDate ultimoDiaMesAnterior = primeiroDiaMesAnterior.withDayOfMonth(primeiroDiaMesAnterior.lengthOfMonth());
+                    dataInicial = primeiroDiaMesAnterior;
+                    dataFinal = ultimoDiaMesAnterior;
+                }
+            }
+            
+            if (deveBuscar) {
+                System.out.println("   Disparando captura para o período de " + dataInicial + " a " + dataFinal);
+                // Usa o método que aceita datas para buscar um período específico
+                publisherService.publicarIndicador(
+                        indicador.getNomeAmigavel(),
+                        indicador.getCodigoSgs(),
+                        indicador.getFrequencia(),
+                        dataInicial,
+                        dataFinal
+                );
+            } else {
+                System.out.println("   Indicador '" + indicador.getNomeAmigavel() + "' não agendado para hoje. Ignorando.");
+            }
+        }
+
+        System.out.println("==========================================================");
+        System.out.println("CAPTURA AGENDADA FINALIZADA.");
+        System.out.println("==========================================================");
+    }
+}
+
