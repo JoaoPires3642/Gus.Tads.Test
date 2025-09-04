@@ -1,7 +1,10 @@
-package br.com.etl.painel_macroeconomico.service;
+package br.com.etl.painel_macroeconomico.service.agendador;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import br.com.etl.painel_macroeconomico.service.AgregacaoService;
+
 import java.time.LocalDate;
 
 @Service
@@ -29,6 +32,7 @@ public class AgendadorAgregacaoService {
         if (LocalDate.now().getDayOfMonth() == 1) {
             System.out.println("INFO: [AgendadorAgregacao] Primeiro dia do mês, recalculando agregados do mês anterior.");
             agregacaoService.calcularEsalvarAgregadosParaMes(LocalDate.now().minusMonths(1));
+            agregacaoService.calcularEsalvarAgregadosParaAno(LocalDate.now().minusYears(1));
         }
 
         System.out.println("==========================================================");

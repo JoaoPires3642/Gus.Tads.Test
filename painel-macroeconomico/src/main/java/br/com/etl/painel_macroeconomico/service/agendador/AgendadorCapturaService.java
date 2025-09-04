@@ -1,6 +1,8 @@
-package br.com.etl.painel_macroeconomico.service;
+package br.com.etl.painel_macroeconomico.service.agendador;
 
 import br.com.etl.painel_macroeconomico.model.Indicador;
+import br.com.etl.painel_macroeconomico.service.PublisherService;
+
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 

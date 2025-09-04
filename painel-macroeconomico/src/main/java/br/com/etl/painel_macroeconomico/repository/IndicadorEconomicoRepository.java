@@ -1,5 +1,6 @@
 package br.com.etl.painel_macroeconomico.repository;
 
+import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoAnual;
 import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoMensal;
 import br.com.etl.painel_macroeconomico.model.IndicadorEconomico;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +29,17 @@ public interface IndicadorEconomicoRepository extends JpaRepository<IndicadorEco
            "MIN(ie.valor)) " +
            "FROM IndicadorEconomico ie " +
            "WHERE ie.data >= :dataInicio AND ie.data <= :dataFim " +
-           "GROUP BY ie.codigoBc, YEAR(ie.data), MONTH(ie.data)")
+           "GROUP BY ie.codigoBc, YEAR(ie.data), MONTH(ie.data)") //aqui agrupamento é por código do indicador, ano e mês
     List<ResultadoAgregacaoMensal> calcularAgregadosMensais(@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim);
+
+@Query("SELECT new br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoAnual(" +
+           "ie.codigoBc, " +
+           "YEAR(ie.data), " +
+           "AVG(ie.valor), " +
+           "MAX(ie.valor), " +
+           "MIN(ie.valor)) " +
+           "FROM IndicadorEconomico ie " +
+           "WHERE ie.data >= :dataInicio AND ie.data <= :dataFim " +
+           "GROUP BY ie.codigoBc, YEAR(ie.data)") 
+    List<ResultadoAgregacaoAnual> calcularAgregadosAnuais(@Param("codigoBc") Integer codigoBc, @Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim);
 }

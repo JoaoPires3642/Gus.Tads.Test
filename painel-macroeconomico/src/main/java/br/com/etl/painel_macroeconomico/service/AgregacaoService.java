@@ -50,4 +50,31 @@ public class AgregacaoService {
         }
         System.out.println("INFO: [AgregacaoService] Agregados mensais salvos com sucesso.");
     }
+    @Transactional
+    public void calcularEsalvarAgregadosParaAno(LocalDate anoDeReferencia) {
+        LocalDate dataInicio = anoDeReferencia.withDayOfYear(1);
+        LocalDate dataFim = anoDeReferencia.withDayOfYear(anoDeReferencia.lengthOfYear());
+        
+        System.out.println("INFO: [AgregacaoService] Calculando agregados para o período de " + dataInicio + " a " + dataFim);
+
+        // 1. Usa a query  para o banco de dados calcular 
+        List<ResultadoAgregacaoMensal> resultados = indicadorRepository.calcularAgregadosMensais(dataInicio, dataFim);
+        
+        System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações calculadas pelo banco de dados.");
+
+        for (ResultadoAgregacaoMensal res : resultados) {
+            IndicadorAgregadoMensal agregado = agregadoRepository
+                .findByCodigoBcAndAnoAndMes(res.codigoBc(), res.ano(), res.mes())
+                .orElse(new IndicadorAgregadoMensal()); 
+            agregado.setCodigoBc(res.codigoBc());
+            agregado.setAno(res.ano());
+            agregado.setMes(res.mes());
+            agregado.setValorMedio(BigDecimal.valueOf(res.valorMedio()));
+            agregado.setValorMaximo(res.valorMaximo());
+            agregado.setValorMinimo(res.valorMinimo());
+
+            agregadoRepository.save(agregado);
+        }
+        System.out.println("INFO: [AgregacaoService] Agregados mensais salvos com sucesso.");
+    }
 }
