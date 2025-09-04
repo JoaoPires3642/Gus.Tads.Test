@@ -10,8 +10,8 @@ public enum Indicador {
     
     DOLAR("Dólar Americano - Venda (PTAX)", 10813, "Diária"),
     EURO("Cotação do Euro", 21619, "Diária"),
-    SELIC("Taxa Selic ", 11, "Diária"),
-    SELICM("Taxa Selic - Mensal", 4390, "Mensal"),
+   // SELIC("Taxa Selic ", 11, "Diária"),
+    SELIC("Taxa Selic", 4390, "Mensal"),
     IPCA("IPCA - Variação Mensal", 10844, "Mensal"),
     RESERVAS_INTERNACIONAIS("Reservas Internacionais", 13982, "Diária");
 

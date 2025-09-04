@@ -100,12 +100,17 @@
     <artifactId>postgresql</artifactId>
     <version>42.2.5</version> <!-- Use a versão que corresponda ao seu banco -->
 </dependency>
-<!-- H2 Database (em memória) para Spring Batch) -->
-<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <scope>runtime</scope>
-</dependency>
+  <!-- Dependência para o Spring Retry -->
+        <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <!-- Spring AOP é necessário para o @Retryable funcionar corretamente -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>

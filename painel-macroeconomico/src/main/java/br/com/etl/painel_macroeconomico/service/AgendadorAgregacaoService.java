@@ -16,7 +16,7 @@ public class AgendadorAgregacaoService {
     // Executa diariamente às 07:55 AM, horário de São Paulo
     // Recalcula os agregados do mês atual e, se for o primeiro dia do mês,
     // também recalcula os agregados do mês anterior.
-    @Scheduled(cron = "0 55 07 * * ?", zone = "America/Sao_Paulo")
+    @Scheduled(cron = "0 33 08 * * ?", zone = "America/Sao_Paulo")
     public void executarAgregacaoDiaria() {
         System.out.println("==========================================================");
         System.out.println("INICIANDO PROCESSO AGENDADO DE AGREGAÇÃO DE DADOS...");
