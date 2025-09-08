@@ -1,7 +1,10 @@
 package br.com.etl.painel_macroeconomico.service;
 
+import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoAnual;
 import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoMensal;
+import br.com.etl.painel_macroeconomico.model.IndicadorAgregadoAnual;
 import br.com.etl.painel_macroeconomico.model.IndicadorAgregadoMensal;
+import br.com.etl.painel_macroeconomico.repository.IndicadorAgregadoAnualRepository;
 import br.com.etl.painel_macroeconomico.repository.IndicadorAgregadoMensalRepository;
 import br.com.etl.painel_macroeconomico.repository.IndicadorEconomicoRepository;
 import org.springframework.stereotype.Service;
@@ -15,30 +18,37 @@ import java.util.List;
 public class AgregacaoService {
 
     private final IndicadorEconomicoRepository indicadorRepository;
-    private final IndicadorAgregadoMensalRepository agregadoRepository;
+    private final IndicadorAgregadoMensalRepository agregadoMensalRepository;
+    private final IndicadorAgregadoAnualRepository agregadoAnualRepository; // <- A dependência que estava faltando
 
-    public AgregacaoService(IndicadorEconomicoRepository indicadorRepository, IndicadorAgregadoMensalRepository agregadoRepository) {
+    // CORREÇÃO: O construtor agora aceita os TRÊS repositórios
+    public AgregacaoService(IndicadorEconomicoRepository indicadorRepository, 
+                            IndicadorAgregadoMensalRepository agregadoMensalRepository, 
+                            IndicadorAgregadoAnualRepository agregadoAnualRepository) {
         this.indicadorRepository = indicadorRepository;
-        this.agregadoRepository = agregadoRepository;
+        this.agregadoMensalRepository = agregadoMensalRepository;
+        this.agregadoAnualRepository = agregadoAnualRepository; // <- Garantindo que seja inicializado
     }
 
-    // Calcula e salva os dados agregados para um determinado mês.
+    /**
+     * Calcula e salva os dados agregados para um determinado mês.
+     */
     @Transactional
     public void calcularEsalvarAgregadosParaMes(LocalDate mesDeReferencia) {
         LocalDate dataInicio = mesDeReferencia.withDayOfMonth(1);
         LocalDate dataFim = mesDeReferencia.withDayOfMonth(mesDeReferencia.lengthOfMonth());
         
-        System.out.println("INFO: [AgregacaoService] Calculando agregados para o período de " + dataInicio + " a " + dataFim);
+        System.out.println("INFO: [AgregacaoService] Calculando agregados mensais para o período de " + dataInicio + " a " + dataFim);
 
-        // 1. Usa a query  para o banco de dados calcular 
         List<ResultadoAgregacaoMensal> resultados = indicadorRepository.calcularAgregadosMensais(dataInicio, dataFim);
         
-        System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações calculadas pelo banco de dados.");
+        System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações mensais calculadas.");
 
         for (ResultadoAgregacaoMensal res : resultados) {
-            IndicadorAgregadoMensal agregado = agregadoRepository
-                .findByCodigoBcAndAnoAndMes(res.codigoBc(), res.ano(), res.mes())
-                .orElse(new IndicadorAgregadoMensal()); 
+            IndicadorAgregadoMensal agregado = agregadoMensalRepository
+                    .findByCodigoBcAndAnoAndMes(res.codigoBc(), res.ano(), res.mes())
+                    .orElse(new IndicadorAgregadoMensal()); 
+
             agregado.setCodigoBc(res.codigoBc());
             agregado.setAno(res.ano());
             agregado.setMes(res.mes());
@@ -46,35 +56,40 @@ public class AgregacaoService {
             agregado.setValorMaximo(res.valorMaximo());
             agregado.setValorMinimo(res.valorMinimo());
 
-            agregadoRepository.save(agregado);
+            agregadoMensalRepository.save(agregado);
         }
         System.out.println("INFO: [AgregacaoService] Agregados mensais salvos com sucesso.");
     }
+
+    /**
+     * Calcula e salva os dados agregados para um determinado ano.
+     */
     @Transactional
     public void calcularEsalvarAgregadosParaAno(LocalDate anoDeReferencia) {
-        LocalDate dataInicio = anoDeReferencia.withDayOfYear(1);
-        LocalDate dataFim = anoDeReferencia.withDayOfYear(anoDeReferencia.lengthOfYear());
-        
-        System.out.println("INFO: [AgregacaoService] Calculando agregados para o período de " + dataInicio + " a " + dataFim);
+        LocalDate dataInicio = LocalDate.of(anoDeReferencia.getYear(), 1, 1);
+        LocalDate dataFim = LocalDate.of(anoDeReferencia.getYear(), 12, 31);
 
-        // 1. Usa a query  para o banco de dados calcular 
-        List<ResultadoAgregacaoMensal> resultados = indicadorRepository.calcularAgregadosMensais(dataInicio, dataFim);
-        
-        System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações calculadas pelo banco de dados.");
+        System.out.println("INFO: [AgregacaoService] Calculando agregados anuais para o período de " + dataInicio + " a " + dataFim);
 
-        for (ResultadoAgregacaoMensal res : resultados) {
-            IndicadorAgregadoMensal agregado = agregadoRepository
-                .findByCodigoBcAndAnoAndMes(res.codigoBc(), res.ano(), res.mes())
-                .orElse(new IndicadorAgregadoMensal()); 
+        List<ResultadoAgregacaoAnual> resultados = indicadorRepository.calcularAgregadosAnuais(dataInicio, dataFim);
+        
+        System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações anuais calculadas.");
+
+        for (ResultadoAgregacaoAnual res : resultados) {
+            // O código agora pode usar o repositório com segurança
+            IndicadorAgregadoAnual agregado = agregadoAnualRepository
+                    .findByCodigoBcAndAno(res.codigoBc(), res.ano())
+                    .orElse(new IndicadorAgregadoAnual());
+                    
             agregado.setCodigoBc(res.codigoBc());
             agregado.setAno(res.ano());
-            agregado.setMes(res.mes());
             agregado.setValorMedio(BigDecimal.valueOf(res.valorMedio()));
             agregado.setValorMaximo(res.valorMaximo());
             agregado.setValorMinimo(res.valorMinimo());
 
-            agregadoRepository.save(agregado);
+            agregadoAnualRepository.save(agregado);
         }
-        System.out.println("INFO: [AgregacaoService] Agregados mensais salvos com sucesso.");
+        System.out.println("INFO: [AgregacaoService] Agregados anuais salvos com sucesso.");
     }
 }
+
