@@ -2,8 +2,8 @@ package br.com.etl.painel_macroeconomico.service;
 
 import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoAnual;
 import br.com.etl.painel_macroeconomico.dto.ResultadoAgregacaoMensal;
-import br.com.etl.painel_macroeconomico.model.IndicadorAgregadoAnual;
-import br.com.etl.painel_macroeconomico.model.IndicadorAgregadoMensal;
+import br.com.etl.painel_macroeconomico.model.agregado.IndicadorAgregadoAnual;
+import br.com.etl.painel_macroeconomico.model.agregado.IndicadorAgregadoMensal;
 import br.com.etl.painel_macroeconomico.repository.IndicadorAgregadoAnualRepository;
 import br.com.etl.painel_macroeconomico.repository.IndicadorAgregadoMensalRepository;
 import br.com.etl.painel_macroeconomico.repository.IndicadorEconomicoRepository;
