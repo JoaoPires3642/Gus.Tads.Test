@@ -27,10 +27,9 @@ public class BcbApiClientService {
         this.mapper = mapper;
     }
 
-    /**
-     * Busca os dados de uma série na API do BCB e os retorna como uma lista de DTOs.
-    * Se ocorrer algum erro na requisição ou no processamento, retorna uma lista vazia.
-     */
+   
+     // Busca os dados de uma série na API do BCB Conforme o Enum Indicador.
+ 
     public List<IndicadorEconomicoDTO> buscarDadosDaSerie(String nome, Integer codigoBc, String frequencia, LocalDate dataInicial, LocalDate dataFinal) {
         try {
             String dataInicialStr = dataInicial.format(BCB_DATE_FORMATTER);
@@ -50,7 +49,7 @@ public class BcbApiClientService {
         } catch (Exception e) {
             System.err.println("ERROR: [BcbApiClientService] Falha ao consultar API do BCB para o código " + codigoBc);
             e.printStackTrace();
-            return Collections.emptyList(); // Retorna lista vazia em caso de erro
+            return Collections.emptyList(); 
         }
     }
 

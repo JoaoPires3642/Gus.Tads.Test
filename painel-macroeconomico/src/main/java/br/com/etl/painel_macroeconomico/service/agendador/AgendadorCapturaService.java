@@ -32,7 +32,7 @@ public class AgendadorCapturaService {
 
         LocalDate hoje = LocalDate.now();
 
-        // Itera sobre todos os valores do Enum para verificar a frequência
+    
         for (Indicador indicador : Indicador.values()) {
             
             System.out.println("-> Verificando indicador: " + indicador.getNomeAmigavel());
@@ -50,7 +50,7 @@ public class AgendadorCapturaService {
             
             
             } else if ("Mensal".equalsIgnoreCase(indicador.getFrequencia())) {
-                // Roda a busca por dados mensais apenas no segundo dia do mês.
+                //Aqui pega para o segundo dia do mês que geralmente é quando o BC publica os dados do mês anterior
                 if (hoje.getDayOfMonth() == 2) {
                     deveBuscar = true;
                     // Busca os dados referentes ao mês anterior completo.

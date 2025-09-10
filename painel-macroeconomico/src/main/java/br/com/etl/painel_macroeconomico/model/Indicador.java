@@ -35,8 +35,6 @@ public enum Indicador {
         this.codigoSgs = codigoSgs;
         this.frequencia = frequencia;
     }
-
-    // Métodos Getters (nenhuma alteração aqui)
     public String getNomeAmigavel() {
         return nomeAmigavel;
     }

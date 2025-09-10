@@ -76,7 +76,6 @@ public class AgregacaoService {
         System.out.println("INFO: [AgregacaoService] " + resultados.size() + " agregações anuais calculadas.");
 
         for (ResultadoAgregacaoAnual res : resultados) {
-            // O código agora pode usar o repositório com segurança
             IndicadorAgregadoAnual agregado = agregadoAnualRepository
                     .findByCodigoBcAndAno(res.codigoBc(), res.ano())
                     .orElse(new IndicadorAgregadoAnual());
