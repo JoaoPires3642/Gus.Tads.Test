@@ -25,11 +25,11 @@ public class ConsumerService {
     @RabbitListener(queues = "painelQueue") // Escuta a fila
     public void consumirMensagem(String mensagemJson) {
         try {
-            // O 'mapper' injetado sabe como lidar com LocalDate ao ler o JSON
+    
             IndicadorEconomicoDTO dto = mapper.readValue(mensagemJson, IndicadorEconomicoDTO.class);
             System.out.println("INFO: Mensagem recebida -> " + dto);
 
-            // Lógica para EVITAR DUPLICATAS
+            // Lógica para EVITAR DUPLICAÇÂO
             repository.findByCodigoBcAndData(dto.getCodigoBc(), dto.getData())
                 .ifPresentOrElse(
                     (indicadorExistente) -> {
@@ -43,7 +43,7 @@ public class ConsumerService {
                 );
 
         } catch (Exception e) {
-            System.err.println("ERROR: Falha ao processar mensagem da fila.");
+            System.err.println("ERROR: [ConsumerService] Falha ao processar mensagem da fila.");
             e.printStackTrace();
         }
     }
@@ -58,7 +58,7 @@ public class ConsumerService {
         entity.setValor(dto.getValor());
         entity.setData(dto.getData());
         entity.setFrequencia(dto.getFrequencia());
-        entity.setCreatedAt(OffsetDateTime.now()); // Define a data de criação
+        entity.setCreatedAt(OffsetDateTime.now()); 
         return entity;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.etl.painel_macroeconomico.model;
+package br.com.etl.painel_macroeconomico.model.agregado;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;

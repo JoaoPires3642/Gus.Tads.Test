@@ -40,6 +40,6 @@ public interface IndicadorEconomicoRepository extends JpaRepository<IndicadorEco
            "MIN(ie.valor)) " +
            "FROM IndicadorEconomico ie " +
            "WHERE ie.data >= :dataInicio AND ie.data <= :dataFim " +
-           "GROUP BY ie.codigoBc, YEAR(ie.data)") 
-    List<ResultadoAgregacaoAnual> calcularAgregadosAnuais(@Param("codigoBc") Integer codigoBc, @Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim);
+           "GROUP BY ie.codigoBc, YEAR(ie.data)") //aqui agrupamento é por código do indicador e ano
+    List<ResultadoAgregacaoAnual> calcularAgregadosAnuais(@Param("dataInicio") LocalDate dataInicio, @Param("dataFim") LocalDate dataFim);
 }
