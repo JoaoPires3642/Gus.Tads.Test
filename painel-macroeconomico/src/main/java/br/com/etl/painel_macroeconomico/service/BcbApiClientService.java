@@ -28,8 +28,8 @@ public class BcbApiClientService {
     }
 
     /**
-     * Busca os dados de uma série na API do BCB e os retorna como uma lista de DTOs.
-    * Se ocorrer algum erro na requisição ou no processamento, retorna uma lista vazia.
+     * @buscaDadosDaSerie Busca os dados de uma série na API do BCB e os retorna como uma lista de DTOs.
+     * Se ocorrer algum erro na requisição ou no processamento, retorna uma lista vazia.
      */
     public List<IndicadorEconomicoDTO> buscarDadosDaSerie(String nome, Integer codigoBc, String frequencia, LocalDate dataInicial, LocalDate dataFinal) {
         try {
