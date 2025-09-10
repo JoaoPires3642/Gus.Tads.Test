@@ -1,8 +1,9 @@
 package br.com.etl.painel_macroeconomico.repository;
 
-import br.com.etl.painel_macroeconomico.model.IndicadorAgregadoMensal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import br.com.etl.painel_macroeconomico.model.agregado.IndicadorAgregadoMensal;
 
 import java.util.Optional;
 

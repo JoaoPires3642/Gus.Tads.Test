@@ -55,7 +55,7 @@ public class PublisherService {
                 dataInicial = dataFinal.minusYears(MAX_YEARS_INTERVAL);
                 System.out.println("INFO:[PublisherService] O período solicitado excedia 10 anos. A data inicial foi ajustada.");
             }
-                // 2. Delega a busca de dados para o serviço especialista
+                
             List<IndicadorEconomicoDTO> dados = bcbApiClient.buscarDadosDaSerie(nome, codigoBc, frequencia, dataInicial, dataFinal);
 
             

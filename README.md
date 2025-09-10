@@ -98,13 +98,17 @@ spring.jpa.show-sql=true
 Com as configurações prontas, execute a aplicação com o seguinte comando Maven:
 ```
 cd painel-macroeconomico
+mvn clean install
 mvn spring-boot:run
 ```
 A aplicação irá iniciar, e os processos agendados serão executados nos horários definidos.
 
 #### Terminal 2: Executando o Frontend
 ```
-cd frontend
+cd front-end-py
+pip install -r requirements.txt
+streamlit run front.py
+
 ```
 
 
