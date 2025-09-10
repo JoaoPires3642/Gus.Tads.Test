@@ -7,13 +7,22 @@ package br.com.etl.painel_macroeconomico.model;
  */
 public enum Indicador {
 
-    
-    DOLAR("Dólar Americano - Venda (PTAX)", 10813, "Diária"),
+    // Câmbio e Reservas
+    DOLAR("Dólar Americano (Venda)", 10813, "Diária"),
     EURO("Cotação do Euro", 21619, "Diária"),
-   // SELIC("Taxa Selic ", 11, "Diária"),
-    SELIC("Taxa Selic", 4390, "Mensal"),
-    IPCA("IPCA - Variação Mensal", 10844, "Mensal"),
-    RESERVAS_INTERNACIONAIS("Reservas Internacionais", 13982, "Diária");
+    RESERVAS_INTERNACIONAIS("Reservas Internacionais", 13982, "Diária"),
+
+    // Juros e Inflação
+    SELIC("Taxa Selic (Acum. Mês)", 4390, "Diária"),
+    IPCA("IPCA (Variação Mensal %)", 10844, "Mensal"),
+    
+    // Atividade Econômica e Emprego
+    IBC_BR("IBC-Br (Prévia do PIB)", 24369, "Mensal"),
+    CAGED("Saldo de Empregos Formais (CAGED)", 28763, "Mensal"),
+ 
+
+    // Fiscal
+    DIVIDA_LIQUIDA_SP("Dívida Líquida do Setor Público (% PIB)", 4513, "Mensal");
 
    //BOVESPA("Índice Bovespa", 7, "Diária"); esta dando erro e falhando
 

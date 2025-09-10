@@ -106,8 +106,7 @@ A aplicação irá iniciar, e os processos agendados serão executados nos horá
 #### Terminal 2: Executando o Frontend
 ```
 cd front-end-py
-pip install supabase
-pip install streamlit
+pip install -r requirements.txt
 streamlit run front.py
 
 ```
