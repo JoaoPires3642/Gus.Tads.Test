@@ -10,8 +10,9 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
+def dashboard_page():
 
-st.set_page_config(
+ st.set_page_config(
     layout="wide", 
     page_title="Dashboard Macroeconômico Brasil",
     page_icon="🇧🇷",
@@ -553,5 +554,5 @@ def main():
     st.sidebar.markdown("---")
     pages[selected_page]()
 
-if __name__ == "__main__":
-    main()
+
+  
