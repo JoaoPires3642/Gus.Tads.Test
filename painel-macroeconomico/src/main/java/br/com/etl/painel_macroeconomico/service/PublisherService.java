@@ -4,14 +4,11 @@ import static br.com.etl.painel_macroeconomico.config.RabbitConfig.EXCHANGE;
 import static br.com.etl.painel_macroeconomico.config.RabbitConfig.ROUTING_KEY;
 import br.com.etl.painel_macroeconomico.dto.IndicadorEconomicoDTO;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.net.URI;
-import java.net.http.HttpResponse;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
