@@ -30,3 +30,4 @@ def register_page(go_to_login, go_to_dashboard):
     st.markdown("---")
     if st.button("Voltar para Login"):
       go_to_login()
+      st.rerun()
