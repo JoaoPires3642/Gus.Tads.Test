@@ -36,6 +36,7 @@ def login_page(go_to_register, go_to_dashboard):
                 st.success(f"Login realizado com sucesso! Bem-vindo {user.get('nome')}")
                 st.session_state["authenticated"] = True  # marca usuário como logado
                 go_to_dashboard()
+                st.rerun()
             else:
                 st.error("Senha incorreta")
 
@@ -47,4 +48,5 @@ def login_page(go_to_register, go_to_dashboard):
     with col2:
       if st.button("Ainda não tem conta? Cadastrar-se"):
         go_to_register()
+        st.rerun()
         
