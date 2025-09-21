@@ -10,18 +10,18 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-def dashboard_page():
 
- st.set_page_config(
+
+st.set_page_config(
     layout="wide", 
     page_title="Dashboard Macroeconômico Brasil",
     page_icon="🇧🇷",
     initial_sidebar_state="expanded"
-)
+ )
 
 
 st.markdown("""
-<style>
+ <style>
     .main-header {
         background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
         padding: 2rem;
@@ -64,10 +64,10 @@ st.markdown("""
         border-left: 4px solid #2196f3;
         margin: 1rem 0;
     }
-</style>
-""", unsafe_allow_html=True)
+ </style>
+ """, unsafe_allow_html=True)
 
-# --- Conexão com Supabase ---
+ # --- Conexão com Supabase ---
 @st.cache_resource
 def init_connection():
     url = "https://mgjzcnaijbeyrkojudlz.supabase.co"
@@ -85,7 +85,7 @@ supabase = init_connection()
 if not supabase:
     st.stop()
 
-# --- Dicionário de Indicadores ---
+ # --- Dicionário de Indicadores ---
 INDICADORES = {
     10813: {"nome": "Dólar Americano (Venda)", "unidade": "R$", "categoria": "Câmbio e Reservas", "icon": "💵"},
     21619: {"nome": "Euro", "unidade": "R$", "categoria": "Câmbio e Reservas", "icon": "💶"},
@@ -97,7 +97,7 @@ INDICADORES = {
     4513: {"nome": "Dívida Líquida", "unidade": "% PIB", "categoria": "Fiscal", "icon": "🧾"}
 }
 
-# --- Funções de Busca de Dados ---
+ # --- Funções de Busca de Dados ---
 @st.cache_data(ttl=3600)
 def fetch_data(table_name: str) -> pd.DataFrame:
     """Busca e processa dados de uma tabela específica."""
@@ -145,7 +145,7 @@ def calculate_variation(df: pd.DataFrame, periods: int = 1) -> tuple:
     var = ((current - previous) / previous) * 100 if previous != 0 else 0
     return var, ""
 
-# --- Header Principal ---
+ # --- Header Principal ---
 def render_header():
     st.markdown("""
     <div class="main-header">
@@ -325,7 +325,7 @@ def render_dashboard():
                 st.plotly_chart(fig_cat, use_container_width=True, key=f"chart_{cat.replace(' ', '_')}")
     
 
-# --- Página: Análise Avançada ---
+ # --- Página: Análise Avançada ---
 def render_analise_avancada():
     st.markdown("# 🔬 Análise Avançada")
     
