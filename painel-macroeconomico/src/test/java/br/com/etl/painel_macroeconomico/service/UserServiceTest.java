@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,10 +30,13 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Teste, criando um usuário ")
     public void testCreateUser() {
+
         UserModel user = new UserModel("Gustavo", "gustavo@gmail.com ", "1234", LocalDate.parse("2000-01-01"));
-        when(userRepository.save(user)).thenReturn(user);
-        
+
+        when(userRepository.save(user)).thenReturn(user); 
+
         UserModel created = userService.createUser(user);
 
         assertEquals(user.getNome(), created.getNome());
