@@ -25,6 +25,12 @@ public class UserService {
     }
 
     public UserModel createUser(UserModel user) {
+
+        if (user.getEmail() == null || !user.getEmail().toLowerCase().contains("@gmail")) {
+            throw new IllegalArgumentException("E-mail inválido! O email deve conter '@gmail'.");
+            
+        }
+
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("E-mail já está em uso!");
         }
