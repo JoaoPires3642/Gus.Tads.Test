@@ -25,4 +25,11 @@ public class UserModel {
 
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
+
+    public UserModel(String nome, String email, String senha, LocalDate localDate) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataNascimento = localDate;
+    }
 }
