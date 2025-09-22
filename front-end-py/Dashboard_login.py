@@ -29,7 +29,7 @@ def login_page(go_to_register, go_to_dashboard):
             if not data:
                 st.error("Usuário não encontrado")
                 return  
-            user = data[0]  # pega o primeiro usuário encontrado
+            user = data[0]
             senha_cadastrada = user.get("senha")          
             
             if senha == senha_cadastrada:
