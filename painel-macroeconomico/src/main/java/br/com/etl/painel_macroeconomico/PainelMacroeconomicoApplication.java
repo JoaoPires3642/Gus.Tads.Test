@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import br.com.etl.painel_macroeconomico.service.AgregacaoService;
-import br.com.etl.painel_macroeconomico.service.PublisherService;
 
 @SpringBootApplication
 @EnableBatchProcessing

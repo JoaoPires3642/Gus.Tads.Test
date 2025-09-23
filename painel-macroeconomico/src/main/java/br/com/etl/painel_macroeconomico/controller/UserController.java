@@ -2,6 +2,8 @@ package br.com.etl.painel_macroeconomico.controller;
 
 import br.com.etl.painel_macroeconomico.model.UserModel;
 import br.com.etl.painel_macroeconomico.service.UserService;
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
