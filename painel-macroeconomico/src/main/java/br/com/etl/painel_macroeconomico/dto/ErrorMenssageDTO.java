@@ -12,7 +12,6 @@ public class RestErrorMenssage {
     private String error;
 
     public RestErrorMenssage(Http status, String message, Timestamp timestamp, String path, String error) {
-        super();
         this.status = status;
         this.message = message;
         this.timestamp = timestamp;
@@ -39,5 +38,6 @@ public class RestErrorMenssage {
     public String getError() {
         return error;
     }
+
 
 }
