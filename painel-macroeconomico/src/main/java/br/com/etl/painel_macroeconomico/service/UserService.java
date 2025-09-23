@@ -1,5 +1,6 @@
 package br.com.etl.painel_macroeconomico.service;
 
+import br.com.etl.painel_macroeconomico.exceptions.UserException;
 import br.com.etl.painel_macroeconomico.model.UserModel;
 import br.com.etl.painel_macroeconomico.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class UserService {
     public UserModel createUser(UserModel user) {
 
         if (user.getEmail() == null || !user.getEmail().toLowerCase().contains("@gmail")) {
-            throw new IllegalArgumentException("E-mail inválido! O email deve conter '@gmail'.");
+            throw new UserException();
             
         }
 
