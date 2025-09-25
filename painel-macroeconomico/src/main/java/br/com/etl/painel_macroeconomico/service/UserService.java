@@ -27,14 +27,12 @@ public class UserService {
 
     public UserModel createUser(UserModel user) {
 
-        if (user.getEmail() == null || !user.getEmail().toLowerCase().contains("@gmail")) {
-            throw new UserException();
-            
-        }
+        UserException.invalidName(user.getNome());
+        UserException.invalidEmail(user.getEmail());
+        UserException.emailAlreadyInUse(user.getId(), userRepository, user.getEmail());
+        UserException.invalidPassword(user.getSenha());
+        UserException.invalidBirthDate(user.getDataNascimento());
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("E-mail já está em uso!");
-        }
         return userRepository.save(user);
     }
 
@@ -47,7 +45,7 @@ public class UserService {
                     user.setDataNascimento(userDetails.getDataNascimento());
                     return userRepository.save(user);
                 })
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> UserException.userNotFound(id));
     }
 
     public void deleteUser(Long id) {
