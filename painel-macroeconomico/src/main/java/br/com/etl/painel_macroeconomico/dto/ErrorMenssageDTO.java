@@ -1,24 +1,26 @@
 package br.com.etl.painel_macroeconomico.dto;
 
-import java.security.Timestamp;
 
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
+import java.time.LocalDateTime;
+
+
+import org.springframework.http.HttpStatus;
 
 public class ErrorMenssageDTO {
-    private Http status;
+    private HttpStatus status;
     private String message;
-    private Timestamp timestamp;
+    private LocalDateTime timestamp;
     private String path;
     private String error;
 
-    public ErrorMenssageDTO(Http status, String message, Timestamp timestamp, String path) {
+    public ErrorMenssageDTO(HttpStatus status, String message, String path) {
         this.status = status;
         this.message = message;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now();
         this.path = path;
     }
 
-    public Http getStatus() {
+    public HttpStatus getStatus() {
         return status;
     }
 
@@ -26,7 +28,7 @@ public class ErrorMenssageDTO {
         return message;
     }
 
-    public Timestamp getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
