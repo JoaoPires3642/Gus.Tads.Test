@@ -92,6 +92,7 @@ public class UserServiceTest {
             "1990-05-15",
             "1985-12-31"
     })
+    
     void naoDeveLancarExcecaoParaDataValida(String data) {
         LocalDate nascimento = LocalDate.parse(data);
         assertDoesNotThrow(() -> UserException.invalidBirthDate(nascimento));
