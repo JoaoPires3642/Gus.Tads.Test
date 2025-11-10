@@ -117,8 +117,8 @@ class PublisherServiceTest {
     @DisplayName("Não deve publicar quando data inicial é posterior à final")
     void naoDevePublicarQuandoDataInicialPosteriorFinal() throws Exception {
         // Arrange
-        LocalDate dataInicialPosterior = LocalDate.of(2024, 1, 31);
-        LocalDate dataFinalAnterior = LocalDate.of(2024, 12, 1);
+        LocalDate dataInicialPosterior = LocalDate.of(2024, 12, 31);
+        LocalDate dataFinalAnterior = LocalDate.of(2024, 1, 1);
 
         // Act
         publisherService.publicarIndicador("Dólar", 10813, "Diária",
