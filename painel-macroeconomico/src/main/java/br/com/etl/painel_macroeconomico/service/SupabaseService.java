@@ -1,6 +1,5 @@
 package br.com.etl.painel_macroeconomico.service;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,15 +14,25 @@ import java.nio.charset.StandardCharsets;
 public class SupabaseService {
 
     @Value("${supabase.url}")
-    private String supabaseUrl;
+    protected String supabaseUrl;
 
     @Value("${supabase.service_key}")
-    private String supabaseKey;
+    protected String supabaseKey;
 
     @Value("${supabase.bucket}")
-    private String bucket;
+    protected String bucket;
 
-    private final HttpClient http = HttpClient.newHttpClient();
+    private HttpClient http = HttpClient.newHttpClient();
+
+    // ✅ permite injetar um mock no teste
+    public void setHttpClient(HttpClient httpClient) {
+        this.http = httpClient;
+    }
+
+    // ✅ getter pra teste (se quiser usar)
+    public HttpClient getHttpClient() {
+        return http;
+    }
 
     public void uploadJson(JsonNode json) throws Exception {
         String path = "indicadores/" + System.currentTimeMillis() + ".json";
