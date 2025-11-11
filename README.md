@@ -196,6 +196,7 @@ prod: semelhante ao dev; ajuste o .env para credenciais e variáveis de produç�
 ![Diagrama de Classe](docs/DiagramaClasses.svg)
 
 ### Diagrama de Sequência 
+![Diagrama de Sequência ](docs/Diagrama_Sequencial.svg)
 
 ## 💾 Persistência de Dados
 Os dados são armazenados em um banco de dados PostgreSQL, divididos em três tabelas principais p:
