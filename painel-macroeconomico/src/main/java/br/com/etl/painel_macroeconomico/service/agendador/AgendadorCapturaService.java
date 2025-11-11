@@ -60,17 +60,21 @@ public class AgendadorCapturaService {
                     dataFinal = ultimoDiaMesAnterior;
                 }
             }
-            
+
             if (deveBuscar) {
                 System.out.println("   Disparando captura para o período de " + dataInicial + " a " + dataFinal);
-               
-                publisherService.publicarIndicador(
-                        indicador.getNomeAmigavel(),
-                        indicador.getCodigoSgs(),
-                        indicador.getFrequencia(),
-                        dataInicial,
-                        dataFinal
-                );
+                try {
+                    publisherService.publicarIndicador(
+                            indicador.getNomeAmigavel(),
+                            indicador.getCodigoSgs(),
+                            indicador.getFrequencia(),
+                            dataInicial,
+                            dataFinal
+                    );
+                } catch (Exception e) {
+                    System.err.println("   ⚠️ Erro ao processar indicador '"
+                            + indicador.getNomeAmigavel() + "': " + e.getMessage());
+                }
             } else {
                 System.out.println("   Indicador '" + indicador.getNomeAmigavel() + "' não agendado para hoje. Ignorando.");
             }
