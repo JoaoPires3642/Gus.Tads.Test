@@ -58,8 +58,6 @@ O frontend é uma aplicação web construída com Streamlit que consome os dados
 ### Diagrama de Sequência 
 
 
-### Diagrama IDEF0
-
 
 ## 🚀 Como Executar
 ### Pré-requisitos
