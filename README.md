@@ -53,7 +53,7 @@ O frontend é uma aplicação web construída com Streamlit que consome os dados
 
 
 ### Diagrama de Classes
-
+![Diagrama de Classe](docs/DiagramaClasses.svg)
 
 ### Diagrama de Sequência 
 
