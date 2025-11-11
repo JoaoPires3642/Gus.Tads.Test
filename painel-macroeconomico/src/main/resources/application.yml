@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: painel-macroeconomico
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://db:5432/appdb}
+    username: ${SPRING_DATASOURCE_USERNAME:appuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:apppassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        default_schema: public
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:rabbitmq}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:guest}
+    password: ${SPRING_RABBITMQ_PASSWORD:guest}
+
+supabase:
+  url: ${SUPABASE_URL:http://localhost/}
+  service_key: ${SUPABASE_SERVICE_KEY:test-key}
+  bucket: ${SUPABASE_BUCKET:test}
+
+logging:
+  level:
+    root: WARN
+    br.com.etl: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        default_schema: test
+  task:
+    scheduling:
+      enabled: false
+  batch:
+    job:
+      enabled: false
+
+supabase:
+  url: http://localhost/
+  service_key: test-key
+  bucket: test
+
+logging:
+  level:
+    root: WARN
+    br.com.etl: INFO
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
+
+supabase:
+  url: ${SUPABASE_URL}
+  service_key: ${SUPABASE_SERVICE_KEY}
+  bucket: ${SUPABASE_BUCKET}
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    br.com.etl: INFO
