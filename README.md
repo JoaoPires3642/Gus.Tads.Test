@@ -52,8 +52,8 @@ O frontend é uma aplicação web construída com Streamlit que consome os dados
 ## 📊 Diagramas (UML e IDEF0)
 
 
-### Diagrama de Componentes
-
+### Diagrama de Classes
+![Diagrama de Classe](docs/DiagramaClasses.svg)
 
 ### Diagrama de Sequência 
 
@@ -111,8 +111,77 @@ streamlit run front.py
 
 ```
 
+## Executar com Docker Compose
+Se preferir, você pode subir tudo com Docker Compose (aplicação, banco e RabbitMQ) usando os perfis definidos no compose.
+
+#### Pré-requisitos
+Docker Desktop instalado e em execução.
+
+#### Passos
+1) Entre na pasta do backend:
+cd painel-macroeconomico
 
 
+2) Revise o arquivo .env desta pasta e ajuste conforme necessário. Ele já contém valores padrão de desenvolvimento, por exemplo:
+#Spring profile
+SPRING_PROFILES_ACTIVE=dev
+
+#Database (PostgreSQL)
+SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/appdb
+SPRING_DATASOURCE_USERNAME=appuser
+SPRING_DATASOURCE_PASSWORD=apppassword
+POSTGRES_DB=appdb
+POSTGRES_USER=appuser
+POSTGRES_PASSWORD=apppassword
+
+#RabbitMQ
+SPRING_RABBITMQ_HOST=rabbitmq
+SPRING_RABBITMQ_PORT=5672
+SPRING_RABBITMQ_USERNAME=guest
+SPRING_RABBITMQ_PASSWORD=guest
+
+#Supabase (dummy defaults)
+SUPABASE_URL=http://localhost/
+SUPABASE_SERVICE_KEY=test-key
+SUPABASE_BUCKET=test
+
+
+3) Subir o ambiente de desenvolvimento (perfil dev):
+docker compose --profile dev up -d
+
+Caso esteja usando a CLI antiga, você pode usar:
+docker-compose --profile dev up -d
+
+
+4) (Opcional) Forçar rebuild das imagens ao subir:
+docker compose --profile dev up -d --build
+
+
+5) Verificar serviços:
+docker compose ps
+
+
+6) Acompanhar logs da aplicação:
+docker compose logs -f app
+
+
+#### Acessos
+Aplicação (Spring Boot): http://localhost:8080
+PostgreSQL: localhost:5432
+RabbitMQ Management: http://localhost:15672 (usuário guest, senha guest por padrão)
+
+#### Encerrar
+Parar e remover os serviços do perfil dev:
+docker compose --profile dev down
+
+Parar e remover também os volumes (apaga dados do banco):
+docker compose --profile dev down -v
+
+
+#### Perfis disponíveis
+dev: sobe app, db (PostgreSQL) e rabbitmq com portas expostas.
+test: sobe app-test em http://localhost:8081.
+prod: semelhante ao dev; ajuste o .env para credenciais e variáveis de produção.
 
 ## 💾 Persistência de Dados
 Os dados são armazenados em um banco de dados PostgreSQL, divididos em três tabelas principais p:
