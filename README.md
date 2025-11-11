@@ -49,13 +49,7 @@ O frontend é uma aplicação web construída com Streamlit que consome os dados
 
 - **Fonte de Dados:** Conecta-se diretamente ao banco de dados PostgreSQL para ler as tabelas indicador_agregado_mensal e indicador_agregado_anual.
 
-## 📊 Diagramas (UML e IDEF0)
 
-
-### Diagrama de Classes
-![Diagrama de Classe](docs/DiagramaClasses.svg)
-
-### Diagrama de Sequência 
 
 
 
@@ -117,10 +111,13 @@ Docker Desktop instalado e em execução.
 
 #### Passos
 1) Entre na pasta do backend:
+ ```
 cd painel-macroeconomico
+```
 
 
-2) Revise o arquivo .env desta pasta e ajuste conforme necessário. Ele já contém valores padrão de desenvolvimento, por exemplo:
+3) Revise o arquivo .env desta pasta e ajuste conforme necessário. Ele já contém valores padrão de desenvolvimento, por exemplo:
+```
 #Spring profile
 SPRING_PROFILES_ACTIVE=dev
 
@@ -142,25 +139,33 @@ SPRING_RABBITMQ_PASSWORD=guest
 SUPABASE_URL=http://localhost/
 SUPABASE_SERVICE_KEY=test-key
 SUPABASE_BUCKET=test
-
+```
 
 3) Subir o ambiente de desenvolvimento (perfil dev):
+```
 docker compose --profile dev up -d
-
+```
 Caso esteja usando a CLI antiga, você pode usar:
+```
 docker-compose --profile dev up -d
-
+```
 
 4) (Opcional) Forçar rebuild das imagens ao subir:
+```
 docker compose --profile dev up -d --build
+```
 
 
-5) Verificar serviços:
+6) Verificar serviços:
+```
 docker compose ps
+```
 
 
-6) Acompanhar logs da aplicação:
+8) Acompanhar logs da aplicação:
+```
 docker compose logs -f app
+```
 
 
 #### Acessos
@@ -170,16 +175,27 @@ RabbitMQ Management: http://localhost:15672 (usuário guest, senha guest por pad
 
 #### Encerrar
 Parar e remover os serviços do perfil dev:
+```
 docker compose --profile dev down
+```
 
 Parar e remover também os volumes (apaga dados do banco):
+```
 docker compose --profile dev down -v
-
+```
 
 #### Perfis disponíveis
 dev: sobe app, db (PostgreSQL) e rabbitmq com portas expostas.
 test: sobe app-test em http://localhost:8081.
 prod: semelhante ao dev; ajuste o .env para credenciais e variáveis de produção.
+
+## 📊 Diagramas (UML e IDEF0)
+
+
+### Diagrama de Classes
+![Diagrama de Classe](docs/DiagramaClasses.svg)
+
+### Diagrama de Sequência 
 
 ## 💾 Persistência de Dados
 Os dados são armazenados em um banco de dados PostgreSQL, divididos em três tabelas principais p:
