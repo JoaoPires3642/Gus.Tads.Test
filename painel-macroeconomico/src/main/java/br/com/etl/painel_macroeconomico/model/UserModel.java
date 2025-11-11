@@ -32,4 +32,8 @@ public class UserModel {
         this.senha = senha;
         this.dataNascimento = localDate;
     }
+
+    public UserModel() {
+
+    }
 }
