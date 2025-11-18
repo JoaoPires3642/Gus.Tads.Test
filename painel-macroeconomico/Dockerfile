@@ -2,7 +2,8 @@
 
 FROM maven:3.9.11-eclipse-temurin-21 AS builder
 WORKDIR /workspace/painel-macroeconomico
-COPY painel-macroeconomico/ /workspace/painel-macroeconomico/
+# Copia todo o contexto de build (a pasta painel-macroeconomico quando o context é `.`)
+COPY . /workspace/painel-macroeconomico/
 RUN mvn -q -DskipTests -B package
 
 FROM eclipse-temurin:21-jre
